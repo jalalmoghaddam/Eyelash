@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @font-face {
+        font-family: "Lucida Console V2";
+        src: url("https://db.onlinewebfonts.com/t/ed07815509f9c255b6e0f66c7910eb97.eot");
+        src: url("https://db.onlinewebfonts.com/t/ed07815509f9c255b6e0f66c7910eb97.eot?#iefix")format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/ed07815509f9c255b6e0f66c7910eb97.woff2")format("woff2"), 
+        url("https://db.onlinewebfonts.com/t/ed07815509f9c255b6e0f66c7910eb97.woff")format("woff"),
+        url("https://db.onlinewebfonts.com/t/ed07815509f9c255b6e0f66c7910eb97.ttf")format("truetype"), 
+        url("https://db.onlinewebfonts.com/t/ed07815509f9c255b6e0f66c7910eb97.svg#Lucida Console V2")format("svg");
+        }
+        
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #282C34;
+        }
+
+        #container{
+            position: relative;
+            width: 380px;
+            height: 500px;            
+            background: #ffffff;            
+            overflow: hidden;
+            user-select: none;            
+        }
+        
+        #eye, #pupil{            
+            position: absolute;            
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;            
+        }
+
+        #footer{
+            width: 100%;
+            height: 20%;
+            position: absolute;
+            bottom: 0;            
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;      
+            font-family:"Lucida Console V2";
+            text-shadow: 0 0 10px white; 
+        }
+
+        .title{
+            font-size: 1.8em;
+        }
+
+        .normal{
+            letter-spacing: 10px;
+        }
+
+    </style>
+</head>
+<body id="body" onload="setSize()" onresize="setSize()" onmousemove="stare(event)">
+    <div id="container" >        
+        <img id="pupil" src="pupil.png"> 
+        <img id="eye" src="eye.png">        
+        <div id="footer">
+            <p class="title">Eyelash</p>
+            <p class="normal">Beauty Salon</p>         
+        </div>
+        
+    </div>
+    
+    
+</body>
+
+<script>
+    const body = document.getElementById("body");
+    const container = document.getElementById("container");
+    const pupil = document.getElementById("pupil");   
+    
+    let offset = {};
+
+    const middle = {};    
+
+    function setSize(){        
+        body.style.width = window.innerWidth + "px";
+        body.style.height = window.innerHeight + "px";
+        offset = container.getBoundingClientRect();
+        middle.x = (offset.width/2);
+        middle.y = (offset.height/2);       
+        
+    }
+
+    function stare(event){
+        
+        let mx = event.x - offset.left - middle.x;
+        let my = event.y - offset.top - middle.y ;
+        
+        let angle = Math.atan2(my,mx);        
+
+        const distance = 15;
+        let newX = Math.cos(angle) * distance * 2.5; 
+        let newY = Math.sin(angle) * distance;        
+
+        pupil.style.left = (middle.x ) + newX + "px"
+        pupil.style.top = (middle.y ) + newY + "px"
+        
+    }
+</script>
+</html>
